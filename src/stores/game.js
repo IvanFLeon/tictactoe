@@ -2,10 +2,17 @@ import { writable } from 'svelte/store';
 import { compare } from '../utils/utils.js'
 
 function createGame() {
+
+  //Data:
+  //finished: Represents if game is over
+  //board: Represents each piece x(false)/o(true)/empty(undefined)
+  //player: x(false)/o(true)
+  //win: Game is always winnable unless game is drawn
 	const { subscribe, set, update } = writable({
     finished: false,
     board: new Array(9),
     player: false,
+    win: true
   });
 
 
@@ -23,6 +30,13 @@ function createGame() {
 
 
           //Check if game is over(win/lose) or no more moves
+          
+          //Check if available spaces for next move
+          if (!state.board.includes(undefined)) {
+            state.finished = true;
+            state.win = false;
+            return state;
+          }
 
           //Check for diagonal completion
           if (i % 2 == 0) {
@@ -43,18 +57,17 @@ function createGame() {
           //Check column completion
           var temp = (i%3);
           state.finished = compare(state.board[temp], state.board[temp+3], state.board[temp+6]) || state.finished;
-
-          console.log(state);
         }
 
         return state;
       });
     },
-    reset() {
+    reset(player) {
       set({
         finished: false,
         board: new Array(9),
-        player: 1,
+        player,
+        win: true
       });
     }
 	};

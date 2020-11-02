@@ -2,6 +2,8 @@
 
   import Piece from './Piece.svelte';
   import { game } from '../stores/game.js';
+  import Circle from './Circle.svelte';
+  import Cross from './Cross.svelte';
 
 </script>
 
@@ -25,8 +27,14 @@
   .message {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 40px;
+    font-weight: 800;
+  }
+  .svg-size{
+    width: 30px;
+    height: 30px;
   }
 </style>
 <div class="wrapper">
@@ -38,7 +46,19 @@
   </div>
   <div class="message">
   {#if $game.finished}
-      {!$game.player} won
+    <button on:click={() => { game.reset($game.player)}}>
+      Reset
+    </button>
+    {#if $game.win}
+    <div class="svg-size">
+      {#if $game.player}
+        <Cross svgSize="100" svgWidth="10"/>
+      {:else}
+        <Circle svgSize="100" svgWidth="10"/>
+      {/if}
+    </div>
+    &nbsp;won!
+    {/if}
   {/if}
   </div>
 </div>
