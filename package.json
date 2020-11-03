@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build",
+    "build": "snowpack build && workbox generateSW workbox-config.js",
     "test": "jest"
   },
   "dependencies": {
