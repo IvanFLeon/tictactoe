@@ -3,6 +3,8 @@
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=PT+Sans&display=swap');
+
   :global(html) {
     font-family: 'PT Sans', sans-serif;
   }
