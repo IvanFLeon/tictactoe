@@ -3,5 +3,5 @@ module.exports = {
   "globPatterns": [
     "**/*.{js,css,ico,html,svg,txt,json,md,svelte}"
   ],
-  "swDest": "public/sw.js"
+  "swDest": "public/service-worker.js"
 };
