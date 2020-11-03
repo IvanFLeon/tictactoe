@@ -1,0 +1,17 @@
+{
+  "short_name": "TicTacToe",
+  "name": "TicTacToe",
+  "description": "A tic-tac-toe game made with Svelte",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "fullscreen",
+  "scope": "/",
+  "theme_color": "#3367D6"
+}
