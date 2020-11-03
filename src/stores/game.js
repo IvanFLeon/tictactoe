@@ -30,14 +30,6 @@ function createGame() {
 
 
           //Check if game is over(win/lose) or no more moves
-          
-          //Check if available spaces for next move
-          if (!state.board.includes(undefined)) {
-            state.finished = true;
-            state.win = false;
-            return state;
-          }
-
           //Check for diagonal completion
           if (i % 2 == 0) {
             
@@ -57,6 +49,13 @@ function createGame() {
           //Check column completion
           var temp = (i%3);
           state.finished = compare(state.board[temp], state.board[temp+3], state.board[temp+6]) || state.finished;
+
+          //Check if available spaces for next move
+          if (!state.finished && !state.board.includes(undefined)) {
+            state.finished = true;
+            state.win = false;
+            return state;
+          }
         }
 
         return state;
