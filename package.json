@@ -16,6 +16,7 @@
     "@testing-library/svelte": "^3.0.0",
     "jest": "^26.2.2",
     "snowpack": "^2.15.1",
-    "svelte-check": "^1.0.0"
+    "svelte-check": "^1.0.0",
+    "workbox-cli": "^5.1.4"
   }
 }
