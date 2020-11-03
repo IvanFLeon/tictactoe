@@ -4,6 +4,39 @@
   import { game } from '../stores/game.js';
   import Circle from './Circle.svelte';
   import Cross from './Cross.svelte';
+  import { fly, crossfade } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
+  import { sleep } from '../utils/utils.js'
+
+  const [send, recieve] = crossfade({
+		duration: d => Math.sqrt(d * 200),
+
+		fallback(node, params) {
+			const style = getComputedStyle(node);
+			const transform = style.transform === 'none' ? '' : style.transform;
+
+			return {
+				duration: 600,
+				easing: quintOut,
+				css: t => `
+					transform: ${transform} scale(${t});
+					opacity: ${t}
+				`
+			};
+		}
+	});
+
+  let currentAnimation = false;
+  let moving = false;
+  let index;
+
+  async function makeMove(i) {
+    index = i;
+    moving = true;
+    await sleep(1000);
+    moving = false;
+    game.move(i);
+  }
 
 </script>
 
@@ -32,15 +65,35 @@
     height: 40px;
     font-weight: 800;
   }
-  .svg-size{
+
+  .message > .svg-wrapper{
     width: 30px;
     height: 30px;
   }
+
+  .current-move {
+    position: absolute;
+    width: 50vmin;
+    height: 50vmin;
+    left: calc(50vw - 25vmin);
+    top: calc(50vh - 25vmin);
+  } 
+  .board-space {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  } 
 </style>
 <div class="wrapper">
   <div class="board">
     {#each $game.board as piece, i}
-      <Piece value={piece} on:click={() => { game.move(i) }}/>
+      <div class="board-space" on:click={() => { if(!(moving||currentAnimation||$game.finished)) makeMove(i) }}>
+        {#if piece != undefined}
+          <div in:recieve={{key: i}}>
+            <Piece value={piece}/>
+          </div>
+        {/if}
+      </div>
     {/each}
 
   </div>
@@ -50,7 +103,7 @@
       Reset
     </button>
     {#if $game.win}
-    <div class="svg-size">
+    <div class="svg-wrapper">
       {#if $game.player}
         <Cross svgSize="100" svgWidth="10"/>
       {:else}
@@ -62,3 +115,15 @@
   {/if}
   </div>
 </div>
+{#if moving}
+  {#if $game.player}
+    <div class="current-move" in:fly="{{ y: 200, duration: 200 }}" out:send={{key: index}} on:introstart={() => {currentAnimation = true;}} on:outroend={() => {currentAnimation = false;}}>
+      <Circle/>
+    </div>
+  {:else}
+    <div class="current-move" in:fly="{{ y: 200, duration: 200 }}" out:send={{key: index}}>
+      <Cross/>
+    </div>
+  {/if}
+{/if}
+
