@@ -12,7 +12,7 @@ module.exports = {
     ],
     [
       '@snowpack/plugin-optimize',
-      {}
+      {preloadModules: true}
     ]
   ],
   install: [
