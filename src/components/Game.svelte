@@ -7,6 +7,7 @@
   import { fly, crossfade } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import { sleep } from '../utils/utils.js'
+  import { afterUpdate, tick } from 'svelte';
 
   const [send, recieve] = crossfade({
 		duration: d => Math.sqrt(d * 200),
@@ -37,6 +38,10 @@
     moving = false;
     game.move(i);
   }
+
+  afterUpdate(() => {
+    console.log(moving, currentAnimation, $game.finished);
+  });
 
 </script>
 
@@ -87,7 +92,7 @@
 <div class="wrapper">
   <div class="board">
     {#each $game.board as piece, i}
-      <div class="board-space" on:click={() => { if(!(moving||currentAnimation||$game.finished)) makeMove(i) }}>
+      <div class="board-space" on:click={() => { if(!(moving||currentAnimation||$game.finished)) makeMove(i); }}>
         {#if piece != undefined}
           <div in:recieve={{key: i}}>
             <Piece value={piece}/>
@@ -121,7 +126,7 @@
       <Circle/>
     </div>
   {:else}
-    <div class="current-move" in:fly="{{ y: 200, duration: 200 }}" out:send={{key: index}}>
+    <div class="current-move" in:fly="{{ y: 200, duration: 200 }}" out:send={{key: index}} on:introstart={() => {currentAnimation = true;}} on:outroend={() => {currentAnimation = false;}}>
       <Cross/>
     </div>
   {/if}
