@@ -27,6 +27,7 @@
 		}
 	});
 
+  //
   let currentAnimation = false;
   let moving = false;
   let index;
@@ -38,10 +39,6 @@
     moving = false;
     game.move(i);
   }
-
-  afterUpdate(() => {
-    console.log(moving, currentAnimation, $game.finished);
-  });
 
 </script>
 
