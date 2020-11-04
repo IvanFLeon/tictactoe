@@ -1,9 +1,16 @@
-<script>
-  export let svgSize= 50;
-  export let svgWidth = 5;
-</script>
+<style>
+  .rotate-center {
+    transform-origin: center center;
+  }
+  .clock {
+    transform: rotate(45deg);
+  }
+  .counterclock {
+    transform: rotate(-45deg);
+  }
+</style>
 
-<svg viewBox="0 0 100 100" style="display: block;">
-  <rect x="{(100 - svgSize)/2}%" y="{(100-svgWidth)/2}%" width="{svgSize}%" height="{svgWidth}%" style="fill:rgb(0,0,0);stroke-width:0;stroke:rgb(0,0,0)" transform-origin="center center" transform="rotate(45)"/>
-  <rect x="{(100 - svgSize)/2}%" y="{(100-svgWidth)/2}%" width="{svgSize}%" height="{svgWidth}%" style="fill:rgb(0,0,0);stroke-width:0;stroke:rgb(0,0,0)" transform-origin="center center" transform="rotate(-45)"/>
+<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style="display: block;">
+  <rect class="rotate-center clock" x="25" y="47.5" width="50" height="5" style="fill:rgb(0,0,0);stroke-width:0;stroke:rgb(0,0,0)"/>
+  <rect class="rotate-center counterclock" x="25" y="47.5" width="50" height="5" style="fill:rgb(0,0,0);stroke-width:0;stroke:rgb(0,0,0)"/>
 </svg>

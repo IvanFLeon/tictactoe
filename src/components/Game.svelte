@@ -105,9 +105,9 @@
     {#if $game.win}
     <div class="svg-wrapper">
       {#if $game.player}
-        <Cross svgSize="100" svgWidth="10"/>
+        <Cross/>
       {:else}
-        <Circle svgSize="100" svgWidth="10"/>
+        <Circle/>
       {/if}
     </div>
     &nbsp;won!
